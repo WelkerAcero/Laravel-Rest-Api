@@ -11,4 +11,13 @@ class SaleDetail extends Model
 
     protected $fillable = ['sale_code_id', 'quantity', 'product_id', 'sub_total'];
 
+    public function sales()
+    {
+        return $this->belongsTo(Sale::class);
+    }
+
+    public function products()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
