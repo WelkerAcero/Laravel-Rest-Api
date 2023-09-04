@@ -12,6 +12,11 @@ class Sale extends Model
     protected $fillable = ['sale_code', 'user_id', 'customer_id'];
     protected $primaryKey = 'sale_code';
     public $incrementing = false;
+
+    public function saleDetails()
+    {
+        return $this->hasMany(SaleDetail::class);
+    }
     
     public function users()
     {
@@ -27,5 +32,6 @@ class Sale extends Model
     {
         return $this->belongsToMany(Product::class);
     }
+
     
 }

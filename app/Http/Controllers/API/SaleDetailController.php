@@ -23,9 +23,12 @@ class SaleDetailController extends Controller
             $data = SaleDetail::create($request->validated());
 
             if ($data) {
-                $notification = Customer::with('sales')->get();
+                $notification = Customer::with('sales.customers')
+                ->whereRelation('sales', 'sale_code', '=', $data->sale_code_id)
+                ->get();
+
                 event(new NewSaleEvent(['sale_detail_creation' => $notification])); // Dispara el evento con los datos  
-                 
+
                 return response()->json(['message' => 'Datos correctamente creados', 'notification' => $notification], 201);
             }
             return response()->json(['error' => 'Los datos no lograron ser guardados'], 400);
